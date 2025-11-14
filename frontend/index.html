@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Management System - Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-section">
+        <div class="logo">💪</div>
+        <h1>Gym Management System</h1>
+      </div>
+      <div class="user-info">
+        <span>Admin Dashboard</span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard">
+      <h2 class="page-title">Welcome to Admin Dashboard</h2>
+      <p class="subtitle">Select a module to view detailed reports and analytics</p>
+
+      <div class="dashboard-grid">
+        <!-- Card 1: Upcoming Birthdays -->
+        <div class="dashboard-card" onclick="window.location.href='upcoming-birthdays.html'">
+          <div class="card-icon birthday-icon">🎂</div>
+          <h3>Upcoming Birthdays</h3>
+          <p>View members with birthdays in the next 30 days</p>
+          <button class="card-btn">View Details →</button>
+        </div>
+
+        <!-- Card 2: Payment Summary -->
+        <div class="dashboard-card" onclick="window.location.href='payment-summary.html'">
+          <div class="card-icon payment-icon">💰</div>
+          <h3>Payment Summary</h3>
+          <p>Analyze revenue by payment modes</p>
+          <button class="card-btn">View Details →</button>
+        </div>
+
+        <!-- Card 3: Trainer Workload -->
+        <div class="dashboard-card" onclick="window.location.href='trainer-workload.html'">
+          <div class="card-icon trainer-icon">🏋️</div>
+          <h3>Trainer Workload</h3>
+          <p>Check trainer schedules and sessions</p>
+          <button class="card-btn">View Details →</button>
+        </div>
+
+        <!-- Card 4: Equipment Maintenance -->
+        <div class="dashboard-card" onclick="window.location.href='equipment-maintenance.html'">
+          <div class="card-icon equipment-icon">⚙️</div>
+          <h3>Equipment Maintenance</h3>
+          <p>View equipment needing service</p>
+          <button class="card-btn">View Details →</button>
+        </div>
+
+        <!-- Card 5: Expired Members -->
+        <div class="dashboard-card" onclick="window.location.href='expired-members.html'">
+          <div class="card-icon expired-icon">📅</div>
+          <h3>Expired Memberships</h3>
+          <p>Follow up with members for renewal</p>
+          <button class="card-btn">View Details →</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Gym Management System. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

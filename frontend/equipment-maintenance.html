@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipment Maintenance - Gym Management</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-section">
+        <div class="logo">💪</div>
+        <h1>Gym Management System</h1>
+      </div>
+      <div class="user-info">
+        <button onclick="window.location.href='index.html'" class="back-btn">← Back to Dashboard</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav>
+        <a href="index.html">🏠 Dashboard</a>
+        <a href="upcoming-birthdays.html">🎂 Birthdays</a>
+        <a href="payment-summary.html">💰 Payments</a>
+        <a href="trainer-workload.html">🏋️ Trainers</a>
+        <a href="equipment-maintenance.html" class="active">⚙️ Equipment</a>
+        <a href="expired-members.html">📅 Expired</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <div class="page-header">
+        <h2>⚙️ Equipment Maintenance Alerts</h2>
+        <button onclick="loadEquipment()" class="refresh-btn">🔄 Refresh Data</button>
+      </div>
+
+      <div id="loading" class="loading">Loading equipment data...</div>
+      <div id="error" class="error" style="display:none;"></div>
+
+      <div id="results" class="results-container"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Gym Management System</p>
+    </footer>
+  </div>
+
+  <script src="js/equipment.js"></script>
+</body>
+</html>

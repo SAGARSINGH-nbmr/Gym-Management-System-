@@ -1,0 +1,17 @@
+{
+  "name": "gym-management-system",
+  "version": "1.0.0",
+  "description": "Backend for Gym Management System",
+  "main": "server.js",
+  "scripts": {
+  "start": "node server.js",
+  "admin": "node server-admin.js",
+  "user": "node server-user.js"
+},
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.3.0"
+  }
+}
