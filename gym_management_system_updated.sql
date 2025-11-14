@@ -28,7 +28,7 @@ CREATE TABLE `attendance` (
   `Status` enum('Present','Absent') DEFAULT 'Present',
   `Remarks` text,
   PRIMARY KEY (`Attendance_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `attendance` (
 
 LOCK TABLES `attendance` WRITE;
 /*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
-INSERT INTO `attendance` VALUES (1,'2024-10-13','Present','Morning session attended'),(2,'2024-10-13','Present','Evening session attended'),(3,'2024-10-12','Absent','Informed leave'),(4,'2024-10-13','Present','On time'),(5,'2024-10-13','Present','Regular workout'),(6,'2024-10-11','Present','Completed full workout'),(7,'2024-10-12','Present','Early morning session'),(8,'2025-10-13','Present','Payment received: Rs.1800.00'),(9,'2025-10-13','Present','Payment received: Rs.4500.00'),(10,'2025-10-13','Present','Payment received: Rs.7500.00'),(11,'2025-10-13','Present','Payment received: Rs.14000.00'),(12,'2025-10-13','Present','Payment received: Rs.1200.00'),(13,'2025-10-13','Present','Payment received: Rs.1600.00'),(14,'2025-10-13','Present','Payment received: Rs.3800.00');
+INSERT INTO `attendance` VALUES (1,'2024-10-13','Present','Morning session attended'),(2,'2024-10-13','Present','Evening session attended'),(3,'2024-10-12','Absent','Informed leave'),(4,'2024-10-13','Present','On time'),(5,'2024-10-13','Present','Regular workout'),(6,'2024-10-11','Present','Completed full workout'),(7,'2024-10-12','Present','Early morning session'),(8,'2025-10-13','Present','Payment received: Rs.1800.00'),(9,'2025-10-13','Present','Payment received: Rs.4500.00'),(10,'2025-10-13','Present','Payment received: Rs.7500.00'),(11,'2025-10-13','Present','Payment received: Rs.14000.00'),(12,'2025-10-13','Present','Payment received: Rs.1200.00'),(13,'2025-10-13','Present','Payment received: Rs.1600.00'),(14,'2025-10-13','Present','Payment received: Rs.3800.00'),(15,'2025-11-01','Present','Payment received: Rs.2500.00'),(16,'2025-11-01','Present','Payment received: Rs.3200.00'),(17,'2025-11-01','Present','Payment received: Rs.4800.00'),(18,'2025-11-01','Present','Payment received: Rs.1900.00'),(19,'2025-11-01','Present','Payment received: Rs.5500.00'),(20,'2025-11-01','Present','Payment received: Rs.2100.00'),(21,'2025-11-01','Present','Payment received: Rs.6200.00');
 /*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,16 +78,17 @@ DROP TABLE IF EXISTS `equipment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `equipment` (
-  `Equip_ID` int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(100) NOT NULL,
+  `Equipment_ID` int NOT NULL AUTO_INCREMENT,
+  `Equipment_Name` varchar(100) NOT NULL,
+  `Equipment_Type` varchar(50) DEFAULT 'Cardio',
   `Condition_Status` enum('Good','Fair','Poor','Under Maintenance') DEFAULT 'Good',
   `Last_Service_Date` date DEFAULT NULL,
   `Purchase_Date` date DEFAULT NULL,
   `Next_Service_Date` date DEFAULT NULL,
   `Equipment_Manual` blob,
-  PRIMARY KEY (`Equip_ID`),
+  PRIMARY KEY (`Equipment_ID`),
   CONSTRAINT `chk_equipment_dates` CHECK (((`Last_Service_Date` is null) or (`Next_Service_Date` is null) or (`Next_Service_Date` > `Last_Service_Date`)))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +97,7 @@ CREATE TABLE `equipment` (
 
 LOCK TABLES `equipment` WRITE;
 /*!40000 ALTER TABLE `equipment` DISABLE KEYS */;
-INSERT INTO `equipment` VALUES (1,'Treadmill Pro X1','Good','2024-09-01','2024-01-15','2024-12-01',NULL),(2,'Bench Press Station','Good','2024-09-15','2024-02-20','2024-12-15',NULL),(3,'Rowing Machine','Fair','2024-08-20','2023-12-10','2024-11-20',NULL),(4,'Leg Press Machine','Good','2024-09-10','2024-03-05','2024-12-10',NULL),(5,'Cable Crossover','Under Maintenance','2024-10-01','2024-01-25','2024-10-20',NULL);
+INSERT INTO `equipment` VALUES (1,'Treadmill Pro X1','Cardio','Good','2024-09-01','2024-01-15','2025-11-03',NULL),(2,'Bench Press Station','Strength','Good','2024-09-15','2024-02-20','2025-11-05',NULL),(3,'Rowing Machine','Cardio','Fair','2024-08-20','2023-12-10','2025-11-07',NULL),(4,'Leg Press Machine','Strength','Good','2024-09-10','2024-03-05','2025-11-02',NULL),(5,'Cable Crossover','Strength','Under Maintenance','2024-10-01','2024-01-25','2025-11-08',NULL),(6,'Elliptical Trainer','Cardio','Fair','2025-10-25','2024-05-10','2025-11-02',NULL),(7,'Smith Machine','Strength','Good','2025-10-28','2024-06-15','2025-11-04',NULL),(8,'Spin Bike Pro','Cardio','Good','2025-10-30','2024-07-20','2025-11-06',NULL);
 /*!40000 ALTER TABLE `equipment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,11 +112,13 @@ CREATE TABLE `member` (
   `Member_ID` int NOT NULL AUTO_INCREMENT,
   `First_Name` varchar(50) NOT NULL,
   `Last_Name` varchar(50) NOT NULL,
-  `Contact_No` varchar(15) NOT NULL,
+  `Phone` varchar(15) NOT NULL,
+  `Email` varchar(100) DEFAULT NULL,
   `Address` text,
   `Join_Date` date NOT NULL,
   `Age` int DEFAULT '18',
   `Gender` enum('Male','Female','Other') NOT NULL,
+  `DOB` date DEFAULT NULL,
   `Trainer_ID` int DEFAULT NULL,
   `Sub_ID` int DEFAULT NULL,
   `Member_Photo` blob,
@@ -125,9 +128,9 @@ CREATE TABLE `member` (
   KEY `FK_Member_Subscription` (`Sub_ID`),
   CONSTRAINT `FK_Member_Subscription` FOREIGN KEY (`Sub_ID`) REFERENCES `subscription` (`Sub_ID`) ON DELETE SET NULL,
   CONSTRAINT `FK_Member_Trainer` FOREIGN KEY (`Trainer_ID`) REFERENCES `trainer` (`Trainer_ID`) ON DELETE SET NULL,
-  CONSTRAINT `chk_contact` CHECK (regexp_like(`Contact_No`,_utf8mb4'^[0-9]{10}$')),
+  CONSTRAINT `chk_contact` CHECK (regexp_like(`Phone`,_utf8mb4'^[0-9]{10}$')),
   CONSTRAINT `chk_member_age` CHECK (((`Age` >= 16) and (`Age` <= 100)))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +139,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'Amit','Verma ✓','9876543210','123 MG Road, Chennai','2024-10-01',28,'Male',1,1,NULL,'No major medical issues'),(2,'Kavya','Nair ✓','9876543211','45 Anna Nagar, Chennai','2024-10-01',25,'Female',2,2,NULL,'Mild asthma, carries inhaler'),(3,'Rohan','Gupta ✓','9876543212','78 T Nagar, Chennai','2024-10-03',32,'Male',3,3,NULL,'Previous knee injury, fully recovered'),(4,'Divya','Iyer ✓','9876543213','90 Adyar, Chennai','2024-10-05',27,'Female',4,4,NULL,'Healthy, no restrictions'),(5,'Karan','Malhotra ✓','9876543214','56 Velachery, Chennai','2024-10-05',30,'Male',5,5,NULL,'Diabetic, monitors blood sugar');
+INSERT INTO `member` VALUES (1,'Amit','Verma ✓','9876543210','amit.verma@gmail.com','123 MG Road, Chennai','2024-10-01',28,'Male','1996-11-15',1,1,NULL,'No major medical issues'),(2,'Kavya','Nair ✓','9876543211','kavya.nair@gmail.com','45 Anna Nagar, Chennai','2024-10-01',25,'Female','1999-11-20',2,2,NULL,'Mild asthma, carries inhaler'),(3,'Rohan','Gupta ✓','9876543212','rohan.gupta@gmail.com','78 T Nagar, Chennai','2024-10-03',32,'Male','1992-11-25',3,3,NULL,'Previous knee injury, fully recovered'),(4,'Divya','Iyer ✓','9876543213','divya.iyer@gmail.com','90 Adyar, Chennai','2024-10-05',27,'Female','1997-12-05',4,4,NULL,'Healthy, no restrictions'),(5,'Karan','Malhotra ✓','9876543214','karan.malhotra@gmail.com','56 Velachery, Chennai','2024-10-05',30,'Male','1994-11-10',5,5,NULL,'Diabetic, monitors blood sugar'),(6,'Ananya','Reddy ✓','9876543220','ananya.reddy@gmail.com','101 Besant Nagar, Chennai','2025-10-15',26,'Female','1998-11-08',1,6,NULL,NULL),(7,'Vikram','Joshi ✓','9876543221','vikram.joshi@gmail.com','202 Mylapore, Chennai','2025-10-20',29,'Male','1995-11-12',2,7,NULL,NULL),(8,'Pooja','Menon','9876543222','pooja.menon@gmail.com','303 Nungambakkam, Chennai','2025-10-25',24,'Female','2000-11-28',3,3,NULL,NULL),(9,'Aditya','Kapoor','9876543223','aditya.kapoor@gmail.com','404 Egmore, Chennai','2025-11-01',31,'Male','1993-11-18',4,1,NULL,NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +190,7 @@ CREATE TABLE `payment` (
   KEY `FK_Payment_Member` (`Member_ID`),
   CONSTRAINT `FK_Payment_Member` FOREIGN KEY (`Member_ID`) REFERENCES `member` (`Member_ID`) ON DELETE CASCADE,
   CONSTRAINT `chk_payment_amount` CHECK ((`Amount` > 0))
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +199,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,'Paid',1500.00,'UPI',1,'TXN1001234567'),(2,'Paid',4000.00,'Card',2,'TXN1001234568'),(3,'Paid',7500.00,'Bank Transfer',3,'TXN1001234569'),(4,'Pending',14000.00,'Cash',4,NULL),(5,'Paid',1500.00,'Card',5,'TXN1001234570'),(6,'Paid',1800.00,'UPI',1,'TXN1001234567'),(7,'Paid',4500.00,'Card',2,'TXN1001234568'),(8,'Paid',7500.00,'Bank Transfer',3,'TXN1001234569'),(9,'Paid',14000.00,'Cash',4,'TXN1001234570'),(10,'Paid',1200.00,'Card',5,'TXN1001234571'),(11,'Paid',1600.00,'UPI',1,'TXN1001234572'),(12,'Paid',3800.00,'Card',2,'TXN1001234573');
+INSERT INTO `payment` VALUES (1,'Paid',1500.00,'UPI',1,'TXN1001234567'),(2,'Paid',4000.00,'Card',2,'TXN1001234568'),(3,'Paid',7500.00,'Bank Transfer',3,'TXN1001234569'),(4,'Pending',14000.00,'Cash',4,NULL),(5,'Paid',1500.00,'Card',5,'TXN1001234570'),(6,'Paid',1800.00,'UPI',1,'TXN1001234567'),(7,'Paid',4500.00,'Card',2,'TXN1001234568'),(8,'Paid',7500.00,'Bank Transfer',3,'TXN1001234569'),(9,'Paid',14000.00,'Cash',4,'TXN1001234570'),(10,'Paid',1200.00,'Card',5,'TXN1001234571'),(11,'Paid',1600.00,'UPI',1,'TXN1001234572'),(12,'Paid',3800.00,'Card',2,'TXN1001234573'),(13,'Paid',2500.00,'Cash',1,'TXN1001234574'),(14,'Paid',3200.00,'UPI',2,'TXN1001234575'),(15,'Paid',4800.00,'Bank Transfer',3,'TXN1001234576'),(16,'Paid',1900.00,'Card',4,'TXN1001234577'),(17,'Paid',5500.00,'UPI',5,'TXN1001234578'),(18,'Paid',2100.00,'Cash',6,'TXN1001234579'),(19,'Paid',6200.00,'Bank Transfer',7,'TXN1001234580');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -237,14 +240,15 @@ DROP TABLE IF EXISTS `session`;
 CREATE TABLE `session` (
   `Session_ID` int NOT NULL AUTO_INCREMENT,
   `Date` date NOT NULL,
+  `Session_Type` varchar(50) DEFAULT 'General Training',
+  `Start_Time` time DEFAULT NULL,
+  `End_Time` time DEFAULT NULL,
   `Room_No` varchar(10) DEFAULT NULL,
-  `Time` varchar(20) DEFAULT NULL,
   `Trainer_ID` int DEFAULT NULL,
   PRIMARY KEY (`Session_ID`),
   KEY `FK_Session_Trainer` (`Trainer_ID`),
-  CONSTRAINT `FK_Session_Trainer` FOREIGN KEY (`Trainer_ID`) REFERENCES `trainer` (`Trainer_ID`) ON DELETE CASCADE,
-  CONSTRAINT `chk_session_time` CHECK (regexp_like(`Time`,_utf8mb4'^[0-9]{2}:[0-9]{2} (AM|PM)$'))
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `FK_Session_Trainer` FOREIGN KEY (`Trainer_ID`) REFERENCES `trainer` (`Trainer_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -253,7 +257,7 @@ CREATE TABLE `session` (
 
 LOCK TABLES `session` WRITE;
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
-INSERT INTO `session` VALUES (1,'2024-10-13','A101','06:00 AM',1),(2,'2024-10-13','A102','07:00 AM',2),(3,'2024-10-13','B201','08:00 AM',3),(4,'2024-10-13','B202','09:00 AM',4),(5,'2024-10-13','A103','10:00 AM',5),(6,'2024-10-14','A101','06:00 AM',1),(7,'2024-10-14','A102','05:00 PM',2),(8,'2025-12-10','Room-101','09:00 AM',1),(9,'2025-12-10','Room-102','11:00 AM',1),(10,'2025-12-10','Room-103','02:00 PM',1);
+INSERT INTO `session` VALUES (1,'2024-10-13','Strength Training','06:00:00','07:00:00','A101',1),(2,'2024-10-13','Yoga','07:00:00','08:00:00','A102',2),(3,'2024-10-13','Cardio','08:00:00','09:00:00','B201',3),(4,'2024-10-13','CrossFit','09:00:00','10:00:00','B202',4),(5,'2024-10-13','Bodybuilding','10:00:00','11:00:00','A103',5),(6,'2024-10-14','HIIT','06:00:00','07:00:00','A101',1),(7,'2024-10-14','Pilates','17:00:00','18:00:00','A102',2),(8,'2025-12-10','Personal Training','09:00:00','10:00:00','Room-101',1),(9,'2025-12-10','Group Class','11:00:00','12:00:00','Room-102',1),(10,'2025-12-10','Weight Loss','14:00:00','15:00:00','Room-103',1),(11,'2025-12-10','Yoga Flow','07:00:00','08:00:00','Room-201',2),(12,'2025-12-10','Power Yoga','15:00:00','16:00:00','Room-202',2),(13,'2025-12-10','Meditation','18:00:00','19:00:00','Room-203',2),(14,'2025-12-10','Cardio Blast','08:00:00','09:00:00','Room-301',3),(15,'2025-12-10','Fat Burning','14:00:00','15:00:00','Room-302',3),(16,'2025-12-10','Running Club','17:00:00','18:00:00','Room-303',3),(17,'2025-12-11','Morning Bootcamp','05:00:00','06:00:00','Room-104',1),(18,'2025-12-11','Advanced Strength','16:00:00','17:00:00','Room-105',1),(19,'2025-12-11','Personal Training','19:00:00','20:00:00','Room-106',1);
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -294,10 +298,10 @@ DROP TABLE IF EXISTS `session_equipment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `session_equipment` (
   `Session_ID` int NOT NULL,
-  `Equip_ID` int NOT NULL,
-  PRIMARY KEY (`Session_ID`,`Equip_ID`),
-  KEY `FK_SessionEquip_Equipment` (`Equip_ID`),
-  CONSTRAINT `FK_SessionEquip_Equipment` FOREIGN KEY (`Equip_ID`) REFERENCES `equipment` (`Equip_ID`) ON DELETE CASCADE,
+  `Equipment_ID` int NOT NULL,
+  PRIMARY KEY (`Session_ID`,`Equipment_ID`),
+  KEY `FK_SessionEquip_Equipment` (`Equipment_ID`),
+  CONSTRAINT `FK_SessionEquip_Equipment` FOREIGN KEY (`Equipment_ID`) REFERENCES `equipment` (`Equipment_ID`) ON DELETE CASCADE,
   CONSTRAINT `FK_SessionEquip_Session` FOREIGN KEY (`Session_ID`) REFERENCES `session` (`Session_ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -377,14 +381,14 @@ DROP TABLE IF EXISTS `subscription`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subscription` (
   `Sub_ID` int NOT NULL AUTO_INCREMENT,
-  `Type` enum('Monthly','Quarterly','Half-Yearly','Yearly') NOT NULL,
+  `Sub_Type` enum('Monthly','Quarterly','Half-Yearly','Yearly') NOT NULL,
   `Start_Date` date NOT NULL,
   `End_Date` date NOT NULL,
   `Price` decimal(10,2) DEFAULT '1500.00',
   PRIMARY KEY (`Sub_ID`),
   CONSTRAINT `chk_subscription_dates` CHECK ((`End_Date` > `Start_Date`)),
   CONSTRAINT `chk_subscription_price` CHECK ((`Price` > 0))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -393,7 +397,7 @@ CREATE TABLE `subscription` (
 
 LOCK TABLES `subscription` WRITE;
 /*!40000 ALTER TABLE `subscription` DISABLE KEYS */;
-INSERT INTO `subscription` VALUES (1,'Monthly','2024-10-01','2024-10-31',1500.00),(2,'Quarterly','2024-10-01','2024-12-31',4000.00),(3,'Half-Yearly','2024-10-01','2025-03-31',7500.00),(4,'Yearly','2024-10-01','2025-09-30',14000.00),(5,'Monthly','2024-10-05','2024-11-04',1500.00);
+INSERT INTO `subscription` VALUES (1,'Monthly','2024-10-01','2025-10-25',1500.00),(2,'Quarterly','2024-10-01','2024-12-31',4000.00),(3,'Half-Yearly','2024-10-01','2025-03-31',7500.00),(4,'Yearly','2024-10-01','2025-09-30',14000.00),(5,'Monthly','2024-10-05','2025-10-28',1500.00),(6,'Monthly','2025-09-01','2025-09-30',1500.00),(7,'Quarterly','2025-07-01','2025-09-30',4000.00);
 /*!40000 ALTER TABLE `subscription` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -406,7 +410,8 @@ DROP TABLE IF EXISTS `trainer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trainer` (
   `Trainer_ID` int NOT NULL AUTO_INCREMENT,
-  `Name` varchar(100) NOT NULL,
+  `First_Name` varchar(50) DEFAULT NULL,
+  `Last_Name` varchar(50) DEFAULT NULL,
   `Specialization` varchar(100) DEFAULT NULL,
   `Salary` decimal(10,2) DEFAULT '30000.00',
   `Years_of_Experience` int DEFAULT '0',
@@ -425,7 +430,7 @@ CREATE TABLE `trainer` (
 
 LOCK TABLES `trainer` WRITE;
 /*!40000 ALTER TABLE `trainer` DISABLE KEYS */;
-INSERT INTO `trainer` VALUES (1,'Rajesh Kumar','Strength Training',45000.00,5,'rajesh.trainer@gym.com',NULL,'Certified Personal Trainer (CPT), Strength & Conditioning Specialist'),(2,'Priya Sharma','Yoga & Flexibility',40000.00,4,'priya.trainer@gym.com',NULL,'RYT 500 Yoga Alliance, Pilates Instructor'),(3,'Arjun Singh','Cardio & Weight Loss',42000.00,3,'arjun.trainer@gym.com',NULL,'Certified Fitness Trainer, Nutrition Coach'),(4,'Sneha Patel','CrossFit & HIIT',48000.00,6,'sneha.trainer@gym.com',NULL,'CrossFit Level 2, HIIT Specialist'),(5,'Vikram Reddy','Bodybuilding',50000.00,7,'vikram.trainer@gym.com',NULL,'IFBB Pro Card, Sports Nutritionist');
+INSERT INTO `trainer` VALUES (1,'Rajesh','Kumar','Strength Training',45000.00,5,'rajesh.trainer@gym.com',NULL,'Certified Personal Trainer (CPT), Strength & Conditioning Specialist'),(2,'Priya','Sharma','Yoga & Flexibility',40000.00,4,'priya.trainer@gym.com',NULL,'RYT 500 Yoga Alliance, Pilates Instructor'),(3,'Arjun','Singh','Cardio & Weight Loss',42000.00,3,'arjun.trainer@gym.com',NULL,'Certified Fitness Trainer, Nutrition Coach'),(4,'Sneha','Patel','CrossFit & HIIT',48000.00,6,'sneha.trainer@gym.com',NULL,'CrossFit Level 2, HIIT Specialist'),(5,'Vikram','Reddy','Bodybuilding',50000.00,7,'vikram.trainer@gym.com',NULL,'IFBB Pro Card, Sports Nutritionist');
 /*!40000 ALTER TABLE `trainer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -438,4 +443,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-01 14:45:10
+-- Dump completed on 2025-11-01 16:37:19
